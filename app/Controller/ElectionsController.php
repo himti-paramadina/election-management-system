@@ -1,0 +1,87 @@
+<?php
+
+class ElectionsController extends AppController {
+    public function beforeFilter() {
+        parent::beforeFilter();
+        $this->Auth->allow('display');
+        $this->layout = "default_admin";
+    }
+    
+    public $name = "Elections";
+    
+    public function create() {
+        /* Need Authentication */
+        
+        if ($this->request->isPost()) {
+            if ($this->Election->save($this->request->data)) {
+                $this->Session->setFlash('Pemilu berhasil dibuat', 'flash_custom');
+                $this->redirect(array('controller' => 'elections', 'action' => 'manage'));
+            }
+            else {
+                $this->Session->setFlash('Gagal membuat pemilu', 'flash_custom');
+            }
+            
+            $this->redirect('manage');
+        }
+          
+    }
+    
+    public function display($identifier) {
+        // Set page layout
+        $this->layout = "default";
+        
+        $election = $this->Election->findByidentifier($identifier);
+        
+        $this->set('election', $election);
+    }
+    
+    public function edit($election_id) {
+        /* Need Authentication */
+        
+    }
+    
+    public function generate_keys($election_id) {
+        $this->loadModel('VotingKey');
+        
+        $election = $this->Election->findByid($election_id);
+        
+        $voters = $this->Election->Voter->find('all', array(
+            'conditions' => array(
+                'election_id' => $election_id,
+                'verified' => true
+            )
+        ));
+        
+        if ($voters == NULL) {
+            $this->Session->setFlash('Belum ada pemilih yang telah diverifikasi untuk pemilu ini.', 'flash_custom');
+            $this->redirect(array('controller' => 'voters', 'action' => 'manage', $election['Election']['id']));
+        }
+        
+        foreach ($voters as $voter) {
+            // Create GUID
+            $this->VotingKey->create();
+            
+            if ($this->VotingKey->save(array(
+                'voting_key' => $this->generate_guid(),
+                'voter_id' => $voter['Voter']['id'],
+                'election_id' => $election_id
+            ))) {
+                // Send e-mail
+                $this->send_voting_key($voter['Voter']['id']);
+            }         
+        }
+        
+        $this->Session->setFlash('Voting-Keys telah dihasilkan!', 'flash_custom');
+        $this->redirect(array('controller' => 'voters', 'action' => 'status', $election['Election']['id']));
+    }
+    
+    public function manage() {
+        /* Need Authentication */
+        
+        $elections = $this->Election->find('all');
+                
+        $this->set('elections', $elections);
+    }    
+}
+
+?>
