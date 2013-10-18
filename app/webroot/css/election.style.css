@@ -4,3 +4,17 @@
     display: block;
     clear: both;
 }
+
+/* Overridden Bootstrap Styles */
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.navbar-inverse a.navbar-brand {
+    color: #ffffff;
+}
+
+.navbar-inverse a.navbar-brand:hover {
+    color: yellow;
+}

@@ -12,12 +12,8 @@
 	?>
 </head>
 <body>
+    <?php echo $this->Element('navigation'); ?>
 	<div class="container">
-	<p align="center">
-	    <a href="<?php echo Router::url(array('controller' => 'elections', 'action' => 'manage')); ?>">
-  	        <?php echo $this->Html->image('header.png'); ?>
-  	    </a>
-	</p>
         <div style="margin-top: 10px;">
             <p align="right">Halo <?php echo AuthComponent::user('name'); ?>! [<a href="<?php echo Router::url(array('controller' => 'administrators', 'action' => 'logout')) ?>">Logout</a>]</p>
         </div>

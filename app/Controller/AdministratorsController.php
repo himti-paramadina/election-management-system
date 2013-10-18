@@ -4,14 +4,10 @@ class AdministratorsController extends AppController {
         
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('logout');
+        $this->Auth->allow('logout', 'add');
         $this->layout = "default_admin";
     }
-    
-    public function administrators() {
-        
-    }
-    
+
     public function add() {
         if ($this->request->isPost()) {
             if ($this->Administrator->save($this->request->data)) {
@@ -25,7 +21,7 @@ class AdministratorsController extends AppController {
     }
         
     public function login() {
-        $this->layout = "default";
+        /* TODO: Filter administrator by it's privilege to a particular election. */
         
         if ($this->request->isPost()) {
             if ($this->Auth->login()) {

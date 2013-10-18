@@ -1,17 +1,26 @@
 <div class="row">
-    <div class="span12">
-        <?php echo $this->Element('admin_election'); ?>
-        <h1>Manajemen Pemilu</h1>
-        <table class="table">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="<?php echo Router::url(array('controller' => 'elections', 'action' => 'manage')) ?>">Manajemen Pemilu</a></li>
+            <li class="active">Index</li>
+        </ol>
+
+        <div class="page-header">
+            <h1>Manajemen Pemilu</h1>
+        </div>
+        <p class="lead">Halaman ini adalah halaman indeks pemilu. Untuk membuat pemilu baru: <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-check"></span> Buat Pemilu</a></p>
+        <table class="table table-striped">
             <?php foreach ($elections as $election) { ?>
             <tr>
-                <td width="100%">
-                    <h3><?php echo $election['Election']['name']; ?></h3>
-                    <p>Pelaksanaan: <?php echo $election['Election']['start_time'] ?> s.d. <?php echo $election['Election']['end_time'] ?></p>
-                    <a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'manage', $election['Election']['id'])); ?>" class="btn">Atur Pemilih</a>
-                    <a href="<?php echo Router::url(array('controller' => 'candidates', 'action' => 'manage', $election['Election']['id'])); ?>" class="btn">Atur Kandidat</a>
-                    <a href="<?php echo Router::url(array('controller' => 'elections', 'action' => 'edit', $election['Election']['id'])); ?>" class="btn">Ubah Data Pemilu</a>
-                    <a href="#" class="btn btn-danger" onclick="toggleModal('delete', '<?php echo Router::url(array('controller' => 'elections', 'action' => 'delete')); ?>', '<?php echo $election['Election']['id']; ?>');">Hapus</a>
+                <td width="50%">
+                    <a class="btn btn-default btn-block"><strong><?php echo $election['Election']['name']; ?></strong></a>
+                    <p align="center">Pelaksanaan: <span class="label label-default"><?php echo $election['Election']['start_time'] ?></span> s.d. <span class="label label-default"><?php echo $election['Election']['end_time'] ?></span></p>
+                </td>
+                <td width="50%">
+                    <a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'manage', $election['Election']['id'])); ?>" class="btn btn-primary"><span class="glyphicon glyphicon-bullhorn"></span> Atur Pemilih</a>
+                    <a href="<?php echo Router::url(array('controller' => 'candidates', 'action' => 'manage', $election['Election']['id'])); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-user"></span> Atur Kandidat</a>
+                    <a href="<?php echo Router::url(array('controller' => 'elections', 'action' => 'edit', $election['Election']['id'])); ?>" class="btn btn-info"><span class="glyphicon glyphicon-saved"></span> Ubah Data Pemilu</a>
+                    <a href="#" class="btn btn-danger" onclick="toggleModal('delete', '<?php echo Router::url(array('controller' => 'elections', 'action' => 'delete')); ?>', '<?php echo $election['Election']['id']; ?>');"><span class="glyphicon glyphicon-trash"></span> Hapus</a>
                 </td>
             </tr>
             <?php } ?>
