@@ -3,7 +3,7 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php echo $title_for_layout; ?>
+		<?php echo $title_for_layout; ?> - Sistem Manajemen Pemilu
 	</title>
 	<?php
 		echo $this->Html->css('bootstrap.min');
@@ -14,9 +14,12 @@
 <body>
     <?php echo $this->Element('navigation'); ?>
 	<div class="container">
+        <?php if (AuthComponent::user()): ?>
         <div style="margin-top: 10px;">
             <p align="right">Halo <?php echo AuthComponent::user('name'); ?>! [<a href="<?php echo Router::url(array('controller' => 'administrators', 'action' => 'logout')) ?>">Logout</a>]</p>
         </div>
+        <?php endif; ?>
+
         <?php echo $this->Session->flash(); ?>
         <?php echo $this->fetch('content'); ?>
         <?php echo $this->Element('footer'); ?>

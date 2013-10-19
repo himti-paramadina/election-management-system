@@ -3,7 +3,7 @@
 class ElectionsController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('display');
+        $this->Auth->allow('display', 'index');
         $this->layout = "default_admin";
     }
     
@@ -27,11 +27,11 @@ class ElectionsController extends AppController {
     }
     
     public function display($identifier) {
-        // Set page layout
         $this->layout = "default";
         
         $election = $this->Election->findByidentifier($identifier);
-        
+
+        $this->set('title_for_layout', $election['Election']['name']);
         $this->set('election', $election);
     }
     
@@ -76,12 +76,16 @@ class ElectionsController extends AppController {
     }
     
     public function manage() {
-        /* Need Authentication */
-        
         $elections = $this->Election->find('all');
-                
         $this->set('elections', $elections);
-    }    
+    }
+
+    public function index() {
+        $this->set('title_for_layout', "Portal Pemilihan Umum");
+
+        $elections = $this->Election->find('all');
+        $this->set('elections', $elections);
+    }
 }
 
 ?>

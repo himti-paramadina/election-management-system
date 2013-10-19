@@ -3,7 +3,7 @@
 <head>
     <?php echo $this->Html->charset(); ?>
     <title>
-            <?php echo $title_for_layout; ?> - Menuju HIMTI-1
+            <?php echo $title_for_layout; ?>
     </title>
     <?php
     
@@ -16,11 +16,6 @@
 </head>
 <body>
 	<div class="container">
-        <p align="center">
-            <a href="<?php echo Router::url('/') ?>">
-                <?php echo $this->Html->image('kpu.png'); ?>
-            </a>
-        </p>
         <?php echo $this->Session->flash(); ?>
 		<?php echo $this->fetch('content'); ?>
         <?php echo $this->Element('footer'); ?>
