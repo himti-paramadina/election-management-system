@@ -32,6 +32,15 @@
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
+    Router::connect(
+        '/info/:unique_id',
+        array('controller' => 'elections', 'action' => 'display'),
+        array(
+            'pass' => array('unique_id'),
+            'unique_id' => '[a-zA-Z0-9-_]+'
+        )
+    );
+
 /**
  * Load all plugin routes. See the CakePlugin documentation on
  * how to customize the loading of plugin routes.

@@ -101,7 +101,7 @@ class VotersController extends AppController {
         }
         
         // Set page title 
-        $this->set('title_for_layout', "Registrasi Pemilih");
+        $this->set('title_for_layout', "Registrasi Pemilih " . $election['Election']['name']);
         
         // Set page layout
         $this->layout = 'default';
@@ -122,21 +122,21 @@ class VotersController extends AppController {
                 // Send e-mail to user
                 
                 // The message
-		$message = 	"Dear " . $this->request->data['Voter']['name'] . "," . "\n\n" . 
-		       		"Kamu telah berhasil mendaftarkan diri sebagai pemilih untuk " . $election['Election']['name'] . ". " .
-		       		"Setelah ini, kamu akan mendapatkan informasi berkala dari Komisi Pemilihan Umum HIMTI Paramadina " .
-		       		"terutama jika terdapat pembaruan terbaru di situs KPU. Pastikan kamu juga secara berkala melihat " .
-		       		"pembaruan yang ada di alamat: http://himti.paramadina.ac.id/election" . "\n\n" .
-		       		"Terima kasih telah mendaftar sebagai pemilih. Pilihan kamu menentukan masa depan HIMTI. :)" . "\n\n" .
-		       		"Salam," . "\n" .
-		       		"Komisi Pemilihan Umum" . "\n" .
-		       		"HIMTI Paramadina" ;
-		
-		// In case any of our lines are larger than 70 characters, we should use wordwrap()
-		$message = wordwrap($message, 70);
-		
-		// Send
-		mail($this->request->data['Voter']['email'], 'Registrasi Pemilih - ' . $election['Election']['name'], $message, 'From: "KPU HIMTI" <kpu@himti.paramadina.ac.id>');
+                $message = 	"Dear " . $this->request->data['Voter']['name'] . "," . "\n\n" .
+                            "Kamu telah berhasil mendaftarkan diri sebagai pemilih untuk " . $election['Election']['name'] . ". " .
+                            "Setelah ini, kamu akan mendapatkan informasi berkala dari Komisi Pemilihan Umum HIMTI Paramadina " .
+                            "terutama jika terdapat pembaruan terbaru di situs KPU. Pastikan kamu juga secara berkala melihat " .
+                            "pembaruan yang ada di alamat: http://himti.paramadina.ac.id/election" . "\n\n" .
+                            "Terima kasih telah mendaftar sebagai pemilih. Pilihan kamu menentukan masa depan HIMTI. :)" . "\n\n" .
+                            "Salam," . "\n" .
+                            "Komisi Pemilihan Umum" . "\n" .
+                            "HIMTI Paramadina" ;
+
+                // In case any of our lines are larger than 70 characters, we should use wordwrap()
+                $message = wordwrap($message, 70);
+
+                // Send
+                mail($this->request->data['Voter']['email'], 'Registrasi Pemilih - ' . $election['Election']['name'], $message, 'From: "KPU HIMTI" <kpu@himti.paramadina.ac.id>');
                                 
                 $this->Session->setFlash('Registrasi pemilih berhasil. :)', 'flash_custom');
                 $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));

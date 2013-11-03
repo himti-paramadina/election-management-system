@@ -10,6 +10,9 @@
         echo $this->Html->css('datepicker');
         echo $this->Html->css('election.style');
 	?>
+    <script>
+        var currenttime = '<?php echo date("F d, Y H:i:s", time())?>' // PHP method of getting server date
+    </script>
 </head>
 <body>
     <?php echo $this->Element('navigation'); ?>
@@ -28,6 +31,7 @@
 	<?php $this->element('sql_dump'); ?>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <?php echo $this->Html->script('bootstrap.min'); ?>
+    <?php echo $this->Html->script('servertime'); ?>
     <?php echo $this->Html->script('bootstrap-datepicker'); ?>
     <script type="text/javascript">
         $(function(){

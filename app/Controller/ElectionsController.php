@@ -83,7 +83,11 @@ class ElectionsController extends AppController {
     public function index() {
         $this->set('title_for_layout', "Portal Pemilihan Umum");
 
-        $elections = $this->Election->find('all');
+        $elections = $this->Election->find('all', array(
+            'conditions' => array(
+                'start_time > ' => date('Y-m-d H:i:s')
+            )
+        ));
         $this->set('elections', $elections);
     }
 }
