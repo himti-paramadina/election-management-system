@@ -39,6 +39,8 @@ class Election extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
+        'Post',
+        /*
 		'ElectionDatum' => array(
 			'className' => 'ElectionDatum',
 			'foreignKey' => 'election_id',
@@ -78,6 +80,7 @@ class Election extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		)
+        */
 	);
 
 }

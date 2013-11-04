@@ -31,8 +31,17 @@ class ElectionsController extends AppController {
         
         $election = $this->Election->findByidentifier($identifier);
 
+        $this->loadModel('Voter');
+        $voters = $this->Voter->find('all', array(
+            'conditions' => array(
+                'election_id' => $election['Election']['id']
+            )
+        ));
+
         $this->set('title_for_layout', $election['Election']['name']);
+
         $this->set('election', $election);
+        $this->set('voters', $voters);
     }
     
     public function edit($election_id) {
@@ -88,6 +97,7 @@ class ElectionsController extends AppController {
                 'start_time > ' => date('Y-m-d H:i:s')
             )
         ));
+
         $this->set('elections', $elections);
     }
 }
