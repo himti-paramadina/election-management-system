@@ -8,7 +8,7 @@
         <div class="page-header">
             <h1>Manajemen Pemilu</h1>
         </div>
-        <p class="lead">Halaman ini adalah halaman indeks pemilu. Untuk membuat pemilu baru: <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-check"></span> Buat Pemilu</a></p>
+        <p class="lead">Halaman ini adalah halaman indeks pemilu. Untuk membuat pemilu baru: <a href="<?php echo Router::url(array('controller' => 'elections', 'action' => 'create')) ?>" class="btn btn-default"><span class="glyphicon glyphicon-check"></span> Buat Pemilu</a></p>
         <table class="table table-striped">
             <?php foreach ($elections as $election) { ?>
             <tr>

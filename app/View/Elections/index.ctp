@@ -29,9 +29,9 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <p><strong>Anda ingin melaksanakan kegiatan pemilihan umum atau <em>voting</em> secara <em>online</em>?</strong></p>
+        <p><strong>Anda ingin melaksanakan kegiatan pemilihan umum secara <em>online</em>?</strong></p>
         <p>Sistem Manajemen Pemilu yang dikembangkan oleh HIMTI Paramadina merupakan sistem terintegrasi yang dapat Anda gunakan
-        untuk melakukan pemilihan umum, ataupun untuk melakukan <em>voting</em>. Untuk informasi selengkapnya, hubungi
+        untuk melakukan pemilihan umum. Untuk informasi selengkapnya, hubungi
         humas HIMTI Paramadina, atau kirimkan email ke <code>litbang[at]himti.paramadina.ac.id</code>.</p>
     </div>
 </div>

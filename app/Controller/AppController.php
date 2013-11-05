@@ -85,7 +85,7 @@ class AppController extends Controller {
         $this->loadModel('EmailTemplate');
         $this->loadModel('Voter');
         
-        $email = $this->EmailTemplate->findByid($template_id);
+        $email = $this->EmailTemplate->findBykey($template_id);
         
         $voter = $this->Voter->findByid($voter_id);
         
@@ -126,7 +126,6 @@ class AppController extends Controller {
                 'body' => $body
             ));
         }
-        
     }
     
     public function send_voting_key($voter_id) {

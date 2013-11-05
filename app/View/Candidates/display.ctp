@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="span12">
+    <div class="col-md-12">
         <h1>Kandidat</h1>
         <h1><?php echo $election['Election']['name']; ?></h1>
         <?php if (time() <= strtotime($election['Election']['start_time'])): ?>

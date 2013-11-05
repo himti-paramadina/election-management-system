@@ -70,13 +70,19 @@ class CandidatesController extends AppController {
         $this->set('title_for_layout', 'Kandidat ' . $election['Election']['name']);
     }
     
-    public function detail($id) {
+    public function detail($electionId, $candidateUniqueId) {
         $this->layout = "default";
         $this->set('title_for_layout', 'Detail Data Kandidat');
 
-        // Load data        
-        $candidate = $this->Candidate->findByid($id);
-        $election = $this->Candidate->Election->findByid($candidate['Candidate']['election_id']);
+        // Load data
+        $election = $this->Candidate->Election->findByidentifier($electionId);
+        $candidates = $this->Candidate->find('all', array(
+            'conditions' => array(
+                'candidate_unique_identifier' => $candidateUniqueId,
+                'election_id' => $election['Election']['id']
+            )
+        ));
+        $candidate = $candidates[0];
         
         // Bypass value to View
         $this->set('candidate', $candidate);
@@ -112,14 +118,14 @@ class CandidatesController extends AppController {
     public function result($election_id) {
         $this->layout = 'default';
         
-        $election = $this->Candidate->Election->findByid($election_id);
+        $election = $this->Candidate->Election->findByidentifier($election_id);
         $this->set('title_for_layout', 'Hasil ' . $election['Election']['name']);
         
         $this->loadModel('ElectionDatum');
         
         $total = $this->ElectionDatum->find('count', array(
             'conditions' => array(
-                'ElectionDatum.election_id' => $election_id
+                'ElectionDatum.election_id' => $election['Election']['id']
             )
         ));
         
@@ -131,7 +137,7 @@ class CandidatesController extends AppController {
                   FROM      candidates, election_data
                   
                   WHERE     candidates.id = election_data.candidate_id 
-                        AND election_data.election_id = " . $election_id . "
+                        AND election_data.election_id = " . $election['Election']['id'] . "
                                 
                   GROUP BY  candidates.id
                   ORDER BY  num DESC";
