@@ -92,12 +92,13 @@ class VotersController extends AppController {
     
     public function register($election_identifier) {
         // Load data
-        $election = $this->Voter->Election->findByidentifier($election_identifier);
+        $this->loadModel('Election');
+        $election = $this->Election->findByidentifier($election_identifier);
 
         // Check time
         if (time() >= strtotime($election['Election']['start_time'])) {
             $this->Session->setFlash('Maaf, masa registrasi pemilih sudah habis.', 'flash_custom');
-            $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
+            $this->redirect('info/' . $election['Election']['identifier']);
         }
         
         // Set page title 
@@ -107,7 +108,6 @@ class VotersController extends AppController {
         $this->layout = 'default';
         
         // Bypass value to View
-        $this->set('election_identifier', $election_identifier);
         $this->set('election', $election);
         
         // Handle saving actions
@@ -115,35 +115,84 @@ class VotersController extends AppController {
             // Assign election_id
             $this->request->data['Voter']['election_id'] = $election['Election']['id'];
             
-            // Assign current time
-            $this->request->data['Voter']['registered_date'] = date('Y-m-d H:i:s');
-            
-            if ($this->Voter->save($this->request->data)) {
-                // Send e-mail to user
-                
-                // The message
-                $message = 	"Dear " . $this->request->data['Voter']['name'] . "," . "\n\n" .
-                            "Kamu telah berhasil mendaftarkan diri sebagai pemilih untuk " . $election['Election']['name'] . ". " .
-                            "Setelah ini, kamu akan mendapatkan informasi berkala dari Komisi Pemilihan Umum HIMTI Paramadina " .
-                            "terutama jika terdapat pembaruan terbaru di situs KPU. Pastikan kamu juga secara berkala melihat " .
-                            "pembaruan yang ada di alamat: http://himti.paramadina.ac.id/election" . "\n\n" .
-                            "Terima kasih telah mendaftar sebagai pemilih. Pilihan kamu menentukan masa depan HIMTI. :)" . "\n\n" .
-                            "Salam," . "\n" .
-                            "Komisi Pemilihan Umum" . "\n" .
-                            "HIMTI Paramadina" ;
+            // Try to find any existing registered voter.
+            $voters = $this->Voter->find('all', array(
+                'conditions' => array(
+                    'email' => $this->request->data['Voter']['email'],
+                    'election_id' => $election['Election']['id']
+                )
+            ));
 
-                // In case any of our lines are larger than 70 characters, we should use wordwrap()
-                $message = wordwrap($message, 70);
+            if (count($voters) == 0) {
+                // Assign current time
+                $this->request->data['Voter']['registered_date'] = date('Y-m-d H:i:s');
 
-                // Send
-                mail($this->request->data['Voter']['email'], 'Registrasi Pemilih - ' . $election['Election']['name'], $message, 'From: "KPU HIMTI" <kpu@himti.paramadina.ac.id>');
-                                
-                $this->Session->setFlash('Registrasi pemilih berhasil. :)', 'flash_custom');
-                $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
+                if ($this->Voter->save($this->request->data)) {
+                    $newVoterId = $this->Voter->getInsertID();
+
+                    // Send e-mail to user
+                    $this->loadModel('EmailTemplate');
+
+                    $email = $this->EmailTemplate->findBykey('voter-registration-notification');
+
+                    $voter = $this->Voter->findByid($newVoterId);
+
+                    $body = str_replace(
+                        array(
+                            '<<name>>',
+                            '<<recipient>>',
+                            '<<election_name>>',
+                            '<<organization_name>>'
+                        ),
+                        array(
+                            $voter['Voter']['name'],
+                            $voter['Voter']['email'],
+                            $election['Election']['name'],
+                            $election['Election']['organization']
+                        ),
+                        $email['EmailTemplate']['body']
+                    );
+
+                    $headers = str_replace(
+                        array(
+                            '<<name>>',
+                            '<<recipient>>'
+                        ),
+                        array(
+                            $voter['Voter']['name'],
+                            $voter['Voter']['email']
+                        ),
+                        $email['EmailTemplate']['headers']
+                    );
+
+                    $subject = str_replace(
+                        array(
+                            '<<election_name>>'
+                        ),
+                        array(
+                            $election['Election']['name']
+                        ), 
+                        $email['EmailTemplate']['subject']
+                    );
+
+                    mail(
+                        $voter['Voter']['email'],
+                        $subject,
+                        $body,
+                        $headers
+                    );
+                            
+                    $this->Session->setFlash('Registrasi pemilih berhasil. :)', 'flash_custom');
+                    $this->redirect('/info/' . $election['Election']['identifier']);
+                }
+                else {
+                    $this->Session->setFlash('Registrasi gagal. :(', 'flash_custom');
+                }
             }
             else {
-                $this->Session->setFlash('Registrasi gagal. :(', 'flash_custom');
-            }            
+                $this->Session->setFlash('Anda telah terdaftar sebagai pemilih.', 'flash_custom');
+                $this->redirect('/info/' . $election['Election']['identifier']);
+            }                        
         }        
     }
     

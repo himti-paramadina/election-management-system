@@ -23,10 +23,6 @@ class Voter extends AppModel {
             'email-rule1' => array(
                 'rule' => 'email',
                 'message' => 'E-mail Anda tidak valid'
-            ),
-            'email-rule2' => array(
-                'rule' => 'isUnique',
-                'message' => 'Pemilih dengan email ini telah ada'
             )
         ),
         'phone_number' => array(

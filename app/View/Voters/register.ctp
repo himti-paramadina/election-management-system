@@ -14,7 +14,7 @@
         <h1>Registrasi Pemilih</h1>
         <p>Kamu akan mendaftar sebagai pemilih pada <strong><?php echo $election['Election']['name']; ?></strong></p>
         <?php echo $this->Form->create(null, array(
-                    'url' => array('controller' => 'voters', 'action' => 'register', $election_identifier)
+                    'url' => array('controller' => 'voters', 'action' => 'register', $election['Election']['identifier'])
                 )); 
         ?>
 
