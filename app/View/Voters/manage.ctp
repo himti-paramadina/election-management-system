@@ -2,17 +2,18 @@
     <div class="span12">
         <ol class="breadcrumb">
             <li><a href="<?php echo Router::url(array('controller' => 'elections', 'action' => 'manage')) ?>">Manajemen Pemilu</a></li>
-            <li><a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'manage', $election['Election']['id'])) ?>">Manajemen Kandidat</a></li>
+            <li><a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'manage', $election['Election']['id'])) ?>">Manajemen Pemilih</a></li>
             <li class="active">Index</li>
         </ol>
 
         <div class="page-header">
             <h1>Manajemen Pemilih</h1>
         </div>
-        <p class="lead">Anda melakukan manajemen data untuk pemilih pada <strong><?php echo $election['Election']['name']; ?></strong>.  <a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'status', $election['Election']['id'])) ?>" class="btn btn-default"><span class="glyphicon glyphicon-stats"></span> Lihat Status Pemilih</a></p>
+        <p class="lead">Anda melakukan manajemen data untuk pemilih pada <strong><?php echo $election['Election']['name']; ?></strong>.</p>
         <p>
-            <?php if ($number_of_voting_keys == 0):?>
+            <?php if ($number_of_voting_keys == 0 && time() >= strtotime($election['Election']['start_time'])):?>
                 <a href="<?php echo Router::url(array('controller' => 'elections', 'action' => 'generate_keys', $election['Election']['id'])) ?>" class="btn btn-warning" onclick="return confirm('Apakah Anda yakin akan meng-generate voting-keys untuk para pemilih ini? Aksi ini hanya bisa dilakukan 1 kali.')">Buat voting-keys untuk seluruh pemilih.</a>
+                <a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'status', $election['Election']['id'])) ?>" class="btn btn-default"><span class="glyphicon glyphicon-stats"></span> Lihat Status Pemilih</a>
             <?php endif; ?>
         </p>
         <table class="table table-striped table-hover">

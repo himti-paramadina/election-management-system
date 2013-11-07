@@ -1,6 +1,13 @@
 <?php
 
 class VotersController extends AppController {
+
+    /*
+        Pending Works
+        - Update email_templates in database
+        - Update string replacement inside email for each information
+    */
+
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('register');
@@ -15,15 +22,11 @@ class VotersController extends AppController {
     );
         
     public $name = "Voters";
-    
-    public function add($election_id) {
-        /* Need Authentication */
-    }
-    
+        
     public function broadcast_message($template_id, $election_id) {
         $this->loadModel('EmailTemplate');
         
-        $email = $this->EmailTemplate->findByid($template_id);
+        $email = $this->EmailTemplate->findBykey($template_id);
         $voters = $this->Voter->find('all', array(
             'conditions' => array(
                 'election_id' => $election_id
@@ -217,7 +220,7 @@ class VotersController extends AppController {
             'id' => $voter_id,
             'verified' => true
         ))) {
-            $this->send_message(2, $voter['Voter']['id']); // template_id = 2
+            $this->send_message('voter-verification-information', $voter['Voter']['id']); // template_id = 2
             $this->Session->setFlash('User dengan id ' . $voter_id . ' bernama ' . $voter['Voter']['name'] . ' telah diverifikasi.', 'flash_custom');
         }
         else {

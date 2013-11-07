@@ -53,7 +53,7 @@ class ElectionsController extends AppController {
         $this->loadModel('VotingKey');
         
         $election = $this->Election->findByid($election_id);
-        
+
         $voters = $this->Election->Voter->find('all', array(
             'conditions' => array(
                 'election_id' => $election_id,

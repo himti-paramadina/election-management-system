@@ -2,7 +2,7 @@
     <div class="span12">
         <ol class="breadcrumb">
             <li><a href="<?php echo Router::url(array('controller' => 'elections', 'action' => 'manage')) ?>">Manajemen Pemilu</a></li>
-            <li><a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'status', $election['Election']['id'])) ?>">Manajemen Status Kandidat</a></li>
+            <li><a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'status', $election['Election']['id'])) ?>">Manajemen Status Pemilih</a></li>
             <li class="active">Index</li>
         </ol>
 

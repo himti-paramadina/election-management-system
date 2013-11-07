@@ -120,6 +120,11 @@ class CandidatesController extends AppController {
         
         $election = $this->Candidate->Election->findByidentifier($election_id);
         $this->set('title_for_layout', 'Hasil ' . $election['Election']['name']);
+
+        if (time() < strtotime($election['Election']['announcement_time'])) {
+            $this->Session->setFlash('Maaf, hasil pemungutan suara belum dapat diumumkan.', 'flash_custom');
+            $this->redirect('/info/' . $election['Election']['identifier']);
+        }
         
         $this->loadModel('ElectionDatum');
         
@@ -173,7 +178,7 @@ class CandidatesController extends AppController {
                 
         if ($this->request->isPost()) {
             // Check is voting-key is still valid
-            $voting_key = $this->VotingKey->findByvoting_key($this->request->data['VotingKey']['voting_key']);
+            $voting_key = $this->VotingKey->findByvoting_key(trim($this->request->data['VotingKey']['voting_key']));
             
             if ($voting_key == NULL) {
                 $this->Session->setFlash('Tidak dapat melakukan vote. Voting-Key Anda tidak valid.', 'flash_custom');
@@ -197,7 +202,7 @@ class CandidatesController extends AppController {
                 
                 if ($isSaved) {
                     // Send email
-                    $this->send_message(3, $voting_key['VotingKey']['voter_id']); // template_id = 3
+                    $this->send_message('voting-key-expired-notification', $voting_key['VotingKey']['voter_id']);
 
                     $this->Session->setFlash('Terima kasih. Pilihan Anda sudah tersimpan. :)', 'flash_custom');
                     $this->redirect(array('controller' => 'candidates', 'action' => 'display', $election['Election']['identifier']));

@@ -133,7 +133,7 @@ class AppController extends Controller {
         $this->loadModel('EmailTemplate');
         $this->loadModel('Voter');
         
-        $email = $this->EmailTemplate->findByid(4); // template_id for voting-key is 4
+        $email = $this->EmailTemplate->findBykey('voting-key-usage-notification');
         
         $voter = $this->Voter->findByid($voter_id);
         $voting_key = $this->Voter->VotingKey->findByvoter_id($voter_id);

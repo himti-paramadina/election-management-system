@@ -42,11 +42,11 @@
     );
 
     Router::connect(
-        '/results/:unique_id',
+        '/results/:election_id',
         array('controller' => 'candidates', 'action' => 'result'),
         array(
-            'pass' => array('unique_id'),
-            'unique_id' => '[a-zA-Z0-9-_]+'
+            'pass' => array('election_id'),
+            'election_id' => '[a-zA-Z0-9-_]+'
         )
     );
 
