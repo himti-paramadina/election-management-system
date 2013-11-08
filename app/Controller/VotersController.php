@@ -20,9 +20,7 @@ class VotersController extends AppController {
             'Voter.name' => 'asc'
         )
     );
-        
-    public $name = "Voters";
-        
+    
     public function broadcast_message($template_id, $election_id) {
         $this->loadModel('EmailTemplate');
         

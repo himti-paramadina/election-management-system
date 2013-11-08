@@ -13,6 +13,7 @@
         <p>
             <?php if ($number_of_voting_keys == 0 && time() >= strtotime($election['Election']['start_time'])):?>
                 <a href="<?php echo Router::url(array('controller' => 'elections', 'action' => 'generate_keys', $election['Election']['id'])) ?>" class="btn btn-warning" onclick="return confirm('Apakah Anda yakin akan meng-generate voting-keys untuk para pemilih ini? Aksi ini hanya bisa dilakukan 1 kali.')">Buat voting-keys untuk seluruh pemilih.</a>
+            <?php elseif ($number_of_voting_keys > 0):?>
                 <a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'status', $election['Election']['id'])) ?>" class="btn btn-default"><span class="glyphicon glyphicon-stats"></span> Lihat Status Pemilih</a>
             <?php endif; ?>
         </p>

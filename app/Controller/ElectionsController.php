@@ -54,7 +54,8 @@ class ElectionsController extends AppController {
         
         $election = $this->Election->findByid($election_id);
 
-        $voters = $this->Election->Voter->find('all', array(
+        $this->loadModel('Voter');
+        $voters = $this->Voter->find('all', array(
             'conditions' => array(
                 'election_id' => $election_id,
                 'verified' => true
@@ -94,7 +95,7 @@ class ElectionsController extends AppController {
 
         $elections = $this->Election->find('all', array(
             'conditions' => array(
-                'start_time > ' => date('Y-m-d H:i:s')
+                'end_time > ' => date('Y-m-d H:i:s')
             )
         ));
 

@@ -182,7 +182,7 @@ class CandidatesController extends AppController {
             
             if ($voting_key == NULL) {
                 $this->Session->setFlash('Tidak dapat melakukan vote. Voting-Key Anda tidak valid.', 'flash_custom');
-                $this->redirect(array('controller' => 'candidates', 'action' => 'display', $election['Election']['identifier']));
+                $this->redirect('/info/' . $election['Election']['identifier']);
             }
             
             if (!$voting_key['VotingKey']['activated']) {
