@@ -37,7 +37,11 @@ class PostsController extends AppController {
     }
 
     public function add() {
+        if ($this->request->isPost()) {
 
+        }
+
+        
     }
 
     public function edit() {

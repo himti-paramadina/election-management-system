@@ -99,7 +99,7 @@ class VotersController extends AppController {
         // Check time
         if (time() >= strtotime($election['Election']['start_time'])) {
             $this->Session->setFlash('Maaf, masa registrasi pemilih sudah habis.', 'flash_custom');
-            $this->redirect('info/' . $election['Election']['identifier']);
+            $this->redirect('/info/' . $election['Election']['identifier']);
         }
         
         // Set page title 
@@ -195,6 +195,13 @@ class VotersController extends AppController {
                 $this->redirect('/info/' . $election['Election']['identifier']);
             }                        
         }        
+    }
+
+    public function resend_voting_key($voterId) {
+        $this->send_voting_key($voterId);
+
+        $this->Session->setFlash('Voting key telah dikirimkan ulang.', 'flash_custom');
+        $this->redirect('/info/' . $election['Election']['identifier']);
     }
     
     public function status($election_id) {

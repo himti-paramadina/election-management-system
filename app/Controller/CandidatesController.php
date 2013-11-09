@@ -166,11 +166,11 @@ class CandidatesController extends AppController {
         // Check time
         if (time() < strtotime($election['Election']['start_time'])) {
             $this->Session->setFlash('Pemilu belum dibuka.', 'flash_custom');
-            $this->redirect(array('controller' => 'candidates', 'action' => 'display', $election['Election']['identifier']));
+            $this->redirect('/info/' . $election['Election']['identifier']);
         }
         else if (time() > strtotime($election['Election']['end_time'])) {
             $this->Session->setFlash('Pemilu telah berakhir.', 'flash_custom');
-            $this->redirect(array('controller' => 'candidates', 'action' => 'display', $election['Election']['identifier']));
+            $this->redirect('/info/' . $election['Election']['identifier']);
         }
                 
         $this->loadModel('ElectionDatum');
@@ -205,7 +205,7 @@ class CandidatesController extends AppController {
                     $this->send_message('voting-key-expired-notification', $voting_key['VotingKey']['voter_id']);
 
                     $this->Session->setFlash('Terima kasih. Pilihan Anda sudah tersimpan. :)', 'flash_custom');
-                    $this->redirect(array('controller' => 'candidates', 'action' => 'display', $election['Election']['identifier']));
+                    $this->redirect('/info/' . $election['Election']['identifier']);
                 }
                 else {
                     $this->Session->setFlash('Gagal memproses pemilihan kandidat. Coba ulangi.', 'flash_custom');
@@ -213,7 +213,7 @@ class CandidatesController extends AppController {
             }
             else {
                 $this->Session->setFlash('Maaf, voting-key Anda sudah terpakai!', 'flash_custom');
-                $this->redirect(array('controller' => 'candidates', 'action' => 'display', $election['Election']['identifier']));
+                $this->redirect('/info/' . $election['Election']['identifier']);
             }
         }
         

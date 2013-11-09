@@ -29,7 +29,7 @@
 
         <?php if (time() > strtotime($election['Election']['start_time']) && time() <= strtotime($election['Election']['end_time'])): ?>
         <a href="<?php echo Router::url(array('controller' => 'candidates', 'action' => 'vote', $candidate['Candidate']['id'])) ?>" class="btn btn-warning btn-block">
-            <span class="glyphicon glyphicon-heart"></span> <em>Vote</em> <?php echo $candidate['Candidate']['name']; ?><?php if ($candidate['Candidate']['name2'] != NULL): ?><?php echo '&amp; ' . $candidate['Candidate']['name2']; ?><?php endif; ?>!
+            <span class="glyphicon glyphicon-heart"></span> <em>Vote</em> <?php echo $candidate['Candidate']['name']; ?><?php if ($candidate['Candidate']['name2'] != NULL): ?><?php echo ' &amp; ' . $candidate['Candidate']['name2']; ?><?php endif; ?>!
         </a>
         <?php endif; ?>
     </div>

@@ -9,6 +9,21 @@
         </a></p>
     </div>
 </div>
+<?php if (time() > strtotime($election['Election']['start_time']) && time() < strtotime($election['Election']['end_time'])): ?>
+<div class="row" style="margin-top: 10px;">
+    <div class="col-md-12">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <strong>Pengambilan Suara Sedang Berlangsung</strong>
+            </div>
+            <div class="panel-body">
+                <p>Pilih kandidatmu dengan mengklik tombol <em>Vote</em> yang ada di halaman visi dan misi mereka! <span id="defaultCountdown2"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<?php elseif (time() > strtotime($election['Election']['announcement_time'])): ?>
+<?php endif; ?>
 <div class="row">
     <div class="col-md-9">
         <div class="page-header">
@@ -63,11 +78,16 @@
 
 <script type="text/javascript">
     var electionStartDate = '<?php echo $election['Election']['start_time']; ?>';
+    var electionEndDate = '<?php echo $election['Election']['end_time']; ?>';
 
     $(function () {
         var registrationExpirationDay = new Date(electionStartDate);
         $('#defaultCountdown').countdown({until: registrationExpirationDay,
             layout: 'Pendaftaran pemilih masih dibuka selama <strong>{dn} {dl}, {hn} {hl}, {mn} {ml}, dan {sn} {sl}</strong>.'});
-        $('#year').text(registrationExpirationDay.getFullYear());
+
+        var electionEndTime = new Date(electionEndDate);
+        $('#defaultCountdown2').countdown({until: electionEndTime,
+            layout: 'Pemilu masih berlangsung selama <strong>{dn} {dl}, {hn} {hl}, {mn} {ml}, dan {sn} {sl}</strong> lagi.'});
     });
+
 </script>

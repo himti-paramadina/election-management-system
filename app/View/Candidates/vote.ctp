@@ -4,12 +4,12 @@
         
         <p>
             Anda akan memilih kandidat <strong><?php echo $candidate['Candidate']['name']; if (strlen($candidate['Candidate']['name2']) > 0): echo ' dan ' . $candidate['Candidate']['name2']; endif; ?></strong>. Untuk melanjutkan,
-            Anda harus memiliki voting-key untuk memilih. Voting-key adalah 32 karakter pengenal yang
+            Anda harus memiliki <em>voting-key</em> untuk memilih. <em>Voting-key</em> adalah 32 karakter pengenal yang
             diberikan kepada Anda via e-mail atau langsung dari KPU saat melakukan pemilihan di tempat.
             Ketikkan sesuai dengan format yang telah kamu dapatkan dari KPU.
         </p>
         <p>
-            <span class="label label-warning">Peringatan!</span> Voting-key yang kamu miliki hanya bisa dipakai
+            <span class="label label-warning">Peringatan!</span> <em>Voting-key</em> yang kamu miliki hanya bisa dipakai
             <span style="color: red;"><strong>1 kali</strong></span> dalam pemilihan. Pastikan Anda menggunakannya dengan
             bijaksana. :)
         </p>
