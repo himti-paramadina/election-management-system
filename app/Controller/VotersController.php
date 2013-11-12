@@ -198,10 +198,13 @@ class VotersController extends AppController {
     }
 
     public function resend_voting_key($voterId) {
+        $voter = $this->Voter->findByid($voterId);
+
         $this->send_voting_key($voterId);
 
         $this->Session->setFlash('Voting key telah dikirimkan ulang.', 'flash_custom');
-        $this->redirect('/info/' . $election['Election']['identifier']);
+
+        $this->redirect(array('controller' => 'voters', 'action' => 'status', $voter['Voter']['election_id']));
     }
     
     public function status($election_id) {

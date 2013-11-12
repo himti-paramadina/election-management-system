@@ -121,7 +121,7 @@ class CandidatesController extends AppController {
         $election = $this->Candidate->Election->findByidentifier($election_id);
         $this->set('title_for_layout', 'Hasil ' . $election['Election']['name']);
 
-        if (time() < strtotime($election['Election']['announcement_time'])) {
+        if (time() < strtotime($election['Election']['announcement_time']) && !($this->Auth->user())) {
             $this->Session->setFlash('Maaf, hasil pemungutan suara belum dapat diumumkan.', 'flash_custom');
             $this->redirect('/info/' . $election['Election']['identifier']);
         }

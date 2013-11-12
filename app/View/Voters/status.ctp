@@ -22,7 +22,7 @@
                 <td><code><?php echo $voter['Voter']['email']; ?></code></td>
                 <td><?php echo $voter['VotingKey'][0]['activated'] ? "<span class='label label-success'>Sudah dipakai</span>" : "<span class='label label-warning'>Belum dipakai</span>"; ?></td>
                 <td>
-                    <a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-send"></span> Kirim Ulang <em>Voting Key</em></a>
+                    <a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'resend_voting_key', $voter['Voter']['id'])) ?>" class="btn btn-warning"><span class="glyphicon glyphicon-send"></span> Kirim Ulang <em>Voting Key</em></a>
                 </td>
             </tr>
             <?php }?>

@@ -1,3 +1,14 @@
+<div class="row">
+    <div class="col-md-12">
+        <p align="center" style="padding: 0; margin: 0;"><a href="<?php echo Router::url('/info/' . $election['Election']['identifier']) ?>">
+        <?php
+            if ($election['Election']['banner_url']):
+                echo $this->Html->image($election['Election']['banner_url'], array('class' => 'img-responsive'));
+            endif;
+        ?>
+        </a></p>
+    </div>
+</div>
 <div class="row" style="padding-top: 20px;">
     <div class="col-md-9">
         <h1>Hasil Pemungutan Suara <small><?php echo $election['Election']['name'];?></small></h1>
@@ -15,7 +26,7 @@
     foreach ($results as $result) {
 ?>
 
-<div class="row" id="candidate<?php echo $i ?>">
+<div class="row" id="candidate<?php echo $i ?>" style="margin-bottom: 10px;">
     <div class="col-md-4">
         <?php echo $result['candidates']['img_url'] == NULL ? $this->Html->image('http://placehold.it/400x200', array('class' => 'thumbnail')):$this->Html->image($result['candidates']['img_url'], array('class' => 'img-responsive thumbnail')); ?>
     </div>
@@ -33,7 +44,7 @@
     }
 ?>
     <div class="row">
-        <p align="center" style="margin: 10px 0px;">Selamat kepada kandidat terpilih. - Komisi Pemilihan Umum, HIMTI Paramadina (<a href="<?php echo Router::url(array('controller' => 'pages', 'action' => 'display', 'home')); ?>">Lihat arsip situs lama</a>)</p>
+        <p align="center" style="margin: 10px 0px;">Selamat kepada kandidat terpilih. - Komisi Pemilihan Umum, HIMTI Paramadina</p>
     </div>
 </div>
     

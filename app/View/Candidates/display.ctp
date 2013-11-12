@@ -11,10 +11,12 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <h1>Kandidat <small><?php echo $election['Election']['name']; ?></small></h1>
+        <div class="page-header">
+            <h1>Kandidat <small><?php echo $election['Election']['name']; ?></small></h1>
+        </div>
     </div>
 </div>
-<?php foreach ($candidates as $candidate) { ?>
+<?php foreach ($candidates as $candidate): ?>
 <div class="row">
     <div class="col-md-5 col-md-offset-1" style="text-align: center;">
         <?php echo $candidate['Candidate']['img_url'] == NULL ? $this->Html->image('http://placehold.it/400x200', array('class' => 'thumbnail')):$this->Html->image($candidate['Candidate']['img_url'], array('class' => 'thumbnail')); ?>
@@ -24,7 +26,7 @@
         <?php if ($candidate['Candidate']['name2'] != NULL) {?>
         <h2 style="margin: 0 0 10px 0;"><?php echo $candidate['Candidate']['name2']; ?></h2>
         <?php } ?>
-        <a href="<?php echo Router::url(array('controller' => 'candidates', 'action' => 'detail', $election['Election']['identifier'], $candidate['Candidate']['candidate_unique_identifier'])); ?>" class="btn btn-default">Lihat Lebih Dekat</a>
+        <a href="<?php echo Router::url(array('controller' => 'candidates', 'action' => 'detail', $election['Election']['identifier'], $candidate['Candidate']['candidate_unique_identifier'])); ?>" class="btn btn-default"><span class="glyphicon glyphicon-check"></span> Kenali Lebih Dekat</a>
         
         <?php        
         if (time() > strtotime($election['Election']['start_time']) && time() <= strtotime($election['Election']['end_time'])): ?>
@@ -33,39 +35,4 @@
     </div>
     <div style="height: 20px; display: block; clear: both;"></div>
 </div>
-
-<?php if (time() > strtotime($election['Election']['start_time']) && time() <= strtotime($election['Election']['end_time'])): ?>
-<!-- Modal Forms -->
-<div id="vote-candidate-<?php echo $candidate['Candidate']['id'] ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <h3 id="myModalLabel">Vote!</h3>
-    </div>
-    <div class="modal-body">
-        <?php 
-            $this->Form->create(null, array(
-                'url' => array('controller' => 'candidates', 'action' => 'vote', )
-            ));
-        ?>
-        
-        <?php $this->Form->end(); ?>
-        <p>Dengan mengklik ini, berarti Anda akan melakukan vote untuk kandidat</p>
-        <p style="text-align: center;">
-            <?php echo $candidate['Candidate']['img_url'] == NULL ? $this->Html->image('http://placehold.it/400x200', array('class' => 'img-polaroid')):$this->Html->image($candidate['Candidate']['img_url'], array('class' => 'img-polaroid')); ?>
-        </p>
-        <p>Jika Anda merasa telah yakin untuk melakukan apa yang mestinya Anda lakukan, silakan lanjutkan
-        langkah ini sesuai dengan kesadaran Anda.</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Batal</button>
-        <a href="#" class="btn btn-warning confirm-vote-candidate-<?php echo $candidate['Candidate']['id'] ?>"><i class="icon-heart"></i> Vote!</a>
-    </div>
-</div>
-<?php endif; ?>
-<?php } ?>
-
-<script>
-    function toggleModal(action, url, id) {
-        $('.confirm-' + action).attr('href', url + '/' + id);
-        $("#" + action).modal('toggle');
-    }
-</script>
+<?php endforeach; ?>
