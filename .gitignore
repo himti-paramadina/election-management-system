@@ -8,9 +8,12 @@
 /build
 /dist
 /tags
+*.mo
 
-/nb-project
-/.idea
+# IDE and editor specific files #
+#################################
+/nbproject
+.idea
 
 # OS generated files #
 ######################

@@ -16,6 +16,7 @@
 
 App::uses('Router', 'Routing');
 App::uses('Hash', 'Utility');
+App::uses('Inflector', 'Utility');
 
 /**
  * Abstract base class for all other Helpers in CakePHP.
@@ -196,10 +197,11 @@ class Helper extends Object {
  *
  * @param string $name Name of the property being accessed.
  * @return mixed Helper or property found at $name
+ * @deprecated 3.0.0 Accessing request properties through this method is deprecated and will be removed in 3.0.
  */
 	public function __get($name) {
 		if (isset($this->_helperMap[$name]) && !isset($this->{$name})) {
-			$settings = array_merge((array)$this->_helperMap[$name]['settings'], array('enabled' => false));
+			$settings = array('enabled' => false) + (array)$this->_helperMap[$name]['settings'];
 			$this->{$name} = $this->_View->loadHelper($this->_helperMap[$name]['class'], $settings);
 		}
 		if (isset($this->{$name})) {
@@ -222,8 +224,9 @@ class Helper extends Object {
  * Provides backwards compatibility access for setting values to the request object.
  *
  * @param string $name Name of the property being accessed.
- * @param mixed $value
+ * @param mixed $value Value to set.
  * @return void
+ * @deprecated 3.0.0 This method will be removed in 3.0
  */
 	public function __set($name, $value) {
 		switch ($name) {
@@ -243,12 +246,12 @@ class Helper extends Object {
 /**
  * Finds URL for specified action.
  *
- * Returns an URL pointing at the provided parameters.
+ * Returns a URL pointing at the provided parameters.
  *
  * @param string|array $url Either a relative string url like `/products/view/23` or
- *    an array of url parameters. Using an array for URLs will allow you to leverage
+ *    an array of URL parameters. Using an array for URLs will allow you to leverage
  *    the reverse routing features of CakePHP.
- * @param boolean $full If true, the full base URL will be prepended to the result
+ * @param bool $full If true, the full base URL will be prepended to the result
  * @return string Full translated URL with base path.
  * @link http://book.cakephp.org/2.0/en/views/helpers.html
  */
@@ -293,16 +296,16 @@ class Helper extends Object {
 	}
 
 /**
- * Generate url for given asset file. Depending on options passed provides full url with domain name.
+ * Generate URL for given asset file. Depending on options passed provides full URL with domain name.
  * Also calls Helper::assetTimestamp() to add timestamp to local files
  *
- * @param string|array Path string or url array
+ * @param string|array $path Path string or URL array
  * @param array $options Options array. Possible keys:
- *   `fullBase` Return full url with domain name
+ *   `fullBase` Return full URL with domain name
  *   `pathPrefix` Path prefix for relative URLs
  *   `ext` Asset extension to append
  *   `plugin` False value will prevent parsing path as a plugin
- * @return string Generated url
+ * @return string Generated URL
  */
 	public function assetUrl($path, $options = array()) {
 		if (is_array($path)) {
@@ -339,10 +342,10 @@ class Helper extends Object {
 	}
 
 /**
- * Encodes an URL for use in HTML attributes.
+ * Encodes a URL for use in HTML attributes.
  *
- * @param string $url The url to encode.
- * @return string The url encoded for both URL & HTML contexts.
+ * @param string $url The URL to encode.
+ * @return string The URL encoded for both URL & HTML contexts.
  */
 	protected function _encodeUrl($url) {
 		$path = parse_url($url, PHP_URL_PATH);
@@ -403,7 +406,8 @@ class Helper extends Object {
  * content is the best way to prevent all possible attacks.
  *
  * @param string|array $output Either an array of strings to clean or a single string to clean.
- * @return string|array cleaned content for output
+ * @return string|array|null Cleaned content for output
+ * @deprecated 3.0.0 This method will be removed in 3.0
  */
 	public function clean($output) {
 		$this->_reset();
@@ -445,7 +449,7 @@ class Helper extends Object {
  * @param string $insertBefore String to be inserted before options.
  * @param string $insertAfter String to be inserted after options.
  * @return string Composed attributes.
- * @deprecated This method will be moved to HtmlHelper in 3.0
+ * @deprecated 3.0.0 This method will be moved to HtmlHelper in 3.0
  */
 	protected function _parseAttributes($options, $exclude = null, $insertBefore = ' ', $insertAfter = null) {
 		if (!is_string($options)) {
@@ -477,9 +481,9 @@ class Helper extends Object {
  *
  * @param string $key The name of the attribute to create
  * @param string $value The value of the attribute to create.
- * @param boolean $escape Define if the value must be escaped
+ * @param bool $escape Define if the value must be escaped
  * @return string The composed attribute.
- * @deprecated This method will be moved to HtmlHelper in 3.0
+ * @deprecated 3.0.0 This method will be moved to HtmlHelper in 3.0
  */
 	protected function _formatAttribute($key, $value, $escape = true) {
 		if (is_array($value)) {
@@ -521,7 +525,7 @@ class Helper extends Object {
  * Sets this helper's model and field properties to the dot-separated value-pair in $entity.
  *
  * @param string $entity A field name, like "ModelName.fieldName" or "ModelName.ID.fieldName"
- * @param boolean $setScope Sets the view scope to the model specified in $tagValue
+ * @param bool $setScope Sets the view scope to the model specified in $tagValue
  * @return void
  */
 	public function setEntity($entity, $setScope = false) {
@@ -661,7 +665,7 @@ class Helper extends Object {
  *
  * @param array|string $options If an array, should be an array of attributes that $key needs to be added to.
  *   If a string or null, will be used as the View entity.
- * @param string $field
+ * @param string $field Field name.
  * @param string $key The name of the attribute to be set, defaults to 'name'
  * @return mixed If an array was given for $options, an array with $key set will be returned.
  *   If a string was supplied a string will be returned.
@@ -702,7 +706,7 @@ class Helper extends Object {
  *
  * @param array|string $options If an array, should be an array of attributes that $key needs to be added to.
  *   If a string or null, will be used as the View entity.
- * @param string $field
+ * @param string $field Field name.
  * @param string $key The name of the attribute to be set, defaults to 'value'
  * @return mixed If an array was given for $options, an array with $key set will be returned.
  *   If a string was supplied a string will be returned.
@@ -777,7 +781,7 @@ class Helper extends Object {
  * Adds the given class to the element options
  *
  * @param array $options Array options/attributes to add a class to
- * @param string $class The classname being added.
+ * @param string $class The class name being added.
  * @param string $key the key to use for class.
  * @return array Array of options with $key set.
  */
@@ -797,7 +801,7 @@ class Helper extends Object {
  *
  * @param string $str String to be output.
  * @return string
- * @deprecated This method will be removed in future versions.
+ * @deprecated 3.0.0 This method will be removed in future versions.
  */
 	public function output($str) {
 		return $str;
@@ -877,8 +881,8 @@ class Helper extends Object {
  * Transforms a recordset from a hasAndBelongsToMany association to a list of selected
  * options for a multiple select element
  *
- * @param string|array $data
- * @param string $key
+ * @param string|array $data Data array or model name.
+ * @param string $key Field name.
  * @return array
  */
 	protected function _selectedArray($data, $key = 'id') {

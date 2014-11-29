@@ -4,8 +4,6 @@
  *
  * Test Case for Shell
  *
- * PHP 5
- *
  * CakePHP :  Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -41,7 +39,7 @@ class ShellTestShell extends Shell {
 /**
  * stopped property
  *
- * @var integer
+ * @var int
  */
 	public $stopped;
 
@@ -55,7 +53,7 @@ class ShellTestShell extends Shell {
 /**
  * stop method
  *
- * @param integer $status
+ * @param int $status
  * @return void
  */
 	protected function _stop($status = 0) {
@@ -195,6 +193,7 @@ class ShellTest extends CakeTestCase {
 		), App::RESET);
 
 		CakePlugin::load('TestPlugin');
+		$this->Shell->tasks = array('DbConfig' => array('one', 'two'));
 		$this->Shell->uses = array('TestPlugin.TestPluginPost');
 		$this->Shell->initialize();
 
@@ -208,6 +207,7 @@ class ShellTest extends CakeTestCase {
 		$this->assertTrue(isset($this->Shell->Comment));
 		$this->assertInstanceOf('Comment', $this->Shell->Comment);
 		$this->assertEquals('Comment', $this->Shell->modelClass);
+		$this->assertInstanceOf('DbConfigTask', $this->Shell->DbConfig);
 
 		App::build();
 	}
@@ -840,6 +840,8 @@ TEXT;
 
 /**
  * Test file and console and logging
+ *
+ * @return void
  */
 	public function testFileAndConsoleLogging() {
 		// file logging
@@ -886,6 +888,8 @@ TEXT;
 
 /**
  * Test file and console and logging quiet output
+ *
+ * @return void
  */
 	public function testQuietLog() {
 		$output = $this->getMock('ConsoleOutput', array(), array(), '', false);

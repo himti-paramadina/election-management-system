@@ -2,8 +2,6 @@
 /**
  * PaginatorHelperTest file
  *
- * PHP 5
- *
  * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -89,9 +87,9 @@ class PaginatorHelperTest extends CakeTestCase {
  * @return void
  */
 	public function testHasPrevious() {
-		$this->assertSame($this->Paginator->hasPrev(), false);
+		$this->assertFalse($this->Paginator->hasPrev());
 		$this->Paginator->request->params['paging']['Article']['prevPage'] = true;
-		$this->assertSame($this->Paginator->hasPrev(), true);
+		$this->assertTrue($this->Paginator->hasPrev());
 		$this->Paginator->request->params['paging']['Article']['prevPage'] = false;
 	}
 
@@ -101,9 +99,9 @@ class PaginatorHelperTest extends CakeTestCase {
  * @return void
  */
 	public function testHasNext() {
-		$this->assertSame($this->Paginator->hasNext(), true);
+		$this->assertTrue($this->Paginator->hasNext());
 		$this->Paginator->request->params['paging']['Article']['nextPage'] = false;
-		$this->assertSame($this->Paginator->hasNext(), false);
+		$this->assertFalse($this->Paginator->hasNext());
 		$this->Paginator->request->params['paging']['Article']['nextPage'] = true;
 	}
 
@@ -231,6 +229,53 @@ class PaginatorHelperTest extends CakeTestCase {
 		$this->Paginator->request->params['paging']['Article']['options']['sort'] = null;
 		$result = $this->Paginator->sort('title', 'Title', array('direction' => 'desc', 'class' => 'foo'));
 		$this->assertRegExp('/\/accounts\/index\/param\/sort:title\/direction:desc" class="foo asc">Title<\/a>$/', $result);
+	}
+
+/**
+ * testSortLinksWithLockOption method
+ *
+ * @return void
+ */
+	public function testSortLinksWithLockOption() {
+		Router::reload();
+		Router::parse('/');
+		Router::setRequestInfo(array(
+			array('plugin' => null, 'controller' => 'accounts', 'action' => 'index', 'pass' => array(), 'url' => array('url' => 'accounts/')),
+			array('base' => '/officespace', 'here' => '/officespace/accounts/', 'webroot' => '/officespace/')
+		));
+		$this->Paginator->options(array('url' => array('param')));
+		$this->Paginator->request['paging'] = array(
+			'Article' => array(
+				'current' => 9,
+				'count' => 62,
+				'prevPage' => false,
+				'nextPage' => true,
+				'pageCount' => 7,
+				'options' => array(
+					'page' => 1,
+					'order' => array('date' => 'asc'),
+					'conditions' => array()
+				),
+				'paramType' => 'named'
+			)
+		);
+
+		$result = $this->Paginator->sort('distance', null, array('lock' => true));
+		$expected = array(
+			'a' => array('href' => '/officespace/accounts/index/param/sort:distance/direction:asc'),
+			'Distance',
+			'/a'
+		);
+		$this->assertTags($result, $expected);
+
+		$this->Paginator->request->params['paging']['Article']['options']['sort'] = 'distance';
+		$result = $this->Paginator->sort('distance', null, array('lock' => true));
+		$expected = array(
+			'a' => array('href' => '/officespace/accounts/index/param/sort:distance/direction:asc', 'class' => 'asc locked'),
+			'Distance',
+			'/a'
+		);
+		$this->assertTags($result, $expected);
 	}
 
 /**
@@ -2233,7 +2278,7 @@ class PaginatorHelperTest extends CakeTestCase {
  */
 	public function testParam() {
 		$result = $this->Paginator->param('count');
-		$this->assertIdentical(62, $result);
+		$this->assertSame(62, $result);
 
 		$result = $this->Paginator->param('imaginary');
 		$this->assertNull($result);

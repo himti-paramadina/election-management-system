@@ -4,8 +4,6 @@
  *
  * The methods in these classes enable the datasources that use XML to work.
  *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -23,7 +21,7 @@
 App::uses('HttpSocket', 'Network/Http');
 
 /**
- * XML handling for Cake.
+ * XML handling for CakePHP.
  *
  * The methods in these classes enable the datasources that use XML to work.
  *
@@ -81,7 +79,7 @@ class Xml {
  *   is disabled by default for security reasons.
  * - If using array as input, you can pass `options` from Xml::fromArray.
  *
- * @param string|array $input XML string, a path to a file, an URL or an array
+ * @param string|array $input XML string, a path to a file, a URL or an array
  * @param array $options The options to use
  * @return SimpleXMLElement|DOMDocument SimpleXMLElement or DOMDocument
  * @throws XmlException
@@ -94,7 +92,7 @@ class Xml {
 			'return' => 'simplexml',
 			'loadEntities' => false,
 		);
-		$options = array_merge($defaults, $options);
+		$options += $defaults;
 
 		if (is_array($input) || is_object($input)) {
 			return self::fromArray((array)$input, $options);
@@ -210,7 +208,7 @@ class Xml {
 			'return' => 'simplexml',
 			'pretty' => false
 		);
-		$options = array_merge($defaults, $options);
+		$options += $defaults;
 
 		$dom = new DOMDocument($options['version'], $options['encoding']);
 		if ($options['pretty']) {
@@ -230,7 +228,7 @@ class Xml {
  *
  * @param DOMDocument $dom Handler to DOMDocument
  * @param DOMElement $node Handler to DOMElement (child)
- * @param array $data Array of data to append to the $node.
+ * @param array &$data Array of data to append to the $node.
  * @param string $format Either 'attribute' or 'tags'. This determines where nested keys go.
  * @return void
  * @throws XmlException
@@ -327,7 +325,7 @@ class Xml {
 	}
 
 /**
- * Returns this XML structure as a array.
+ * Returns this XML structure as an array.
  *
  * @param SimpleXMLElement|DOMDocument|DOMNode $obj SimpleXMLElement, DOMDocument or DOMNode instance
  * @return array Array representation of the XML structure.
@@ -350,7 +348,7 @@ class Xml {
  * Recursive method to toArray
  *
  * @param SimpleXMLElement $xml SimpleXMLElement object
- * @param array $parentData Parent array with data
+ * @param array &$parentData Parent array with data
  * @param string $ns Namespace of current child
  * @param array $namespaces List of namespaces in XML
  * @return void

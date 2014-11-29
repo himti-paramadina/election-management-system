@@ -2,8 +2,6 @@
 /**
  * Internationalization
  *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -76,7 +74,7 @@ class I18n {
  * Set to true when I18N::_bindTextDomain() is called for the first time.
  * If a translation file is found it is set to false again
  *
- * @var boolean
+ * @var bool
  */
 	protected $_noLocale = false;
 
@@ -90,6 +88,68 @@ class I18n {
 	);
 
 /**
+ * Constants for the translation categories.
+ *
+ * The constants may be used in translation fetching
+ * instead of hardcoded integers.
+ * Example:
+ * {{{
+ *	I18n::translate('CakePHP is awesome.', null, null, I18n::LC_MESSAGES)
+ * }}}
+ *
+ * To keep the code more readable, I18n constants are preferred over
+ * hardcoded integers.
+ */
+/**
+ * Constant for LC_ALL.
+ *
+ * @var int
+ */
+	const LC_ALL = 0;
+
+/**
+ * Constant for LC_COLLATE.
+ *
+ * @var int
+ */
+	const LC_COLLATE = 1;
+
+/**
+ * Constant for LC_CTYPE.
+ *
+ * @var int
+ */
+	const LC_CTYPE = 2;
+
+/**
+ * Constant for LC_MONETARY.
+ *
+ * @var int
+ */
+	const LC_MONETARY = 3;
+
+/**
+ * Constant for LC_NUMERIC.
+ *
+ * @var int
+ */
+	const LC_NUMERIC = 4;
+
+/**
+ * Constant for LC_TIME.
+ *
+ * @var int
+ */
+	const LC_TIME = 5;
+
+/**
+ * Constant for LC_MESSAGES.
+ *
+ * @var int
+ */
+	const LC_MESSAGES = 6;
+
+/**
  * Escape string
  *
  * @var string
@@ -98,8 +158,6 @@ class I18n {
 
 /**
  * Constructor, use I18n::getInstance() to get the i18n translation object.
- *
- * @return void
  */
 	public function __construct() {
 		$this->l10n = new L10n();
@@ -127,13 +185,13 @@ class I18n {
  * @param string $domain Domain The domain of the translation. Domains are often used by plugin translations.
  *    If null, the default domain will be used.
  * @param string $category Category The integer value of the category to use.
- * @param integer $count Count Count is used with $plural to choose the correct plural form.
+ * @param int $count Count Count is used with $plural to choose the correct plural form.
  * @param string $language Language to translate string to.
  *    If null it checks for language in session followed by Config.language configuration variable.
  * @return string translated string.
  * @throws CakeException When '' is provided as a domain.
  */
-	public static function translate($singular, $plural = null, $domain = null, $category = 6, $count = null, $language = null) {
+	public static function translate($singular, $plural = null, $domain = null, $category = self::LC_MESSAGES, $count = null, $language = null) {
 		$_this = I18n::getInstance();
 
 		if (strpos($singular, "\r\n") !== false) {
@@ -251,8 +309,8 @@ class I18n {
  * Attempts to find the plural form of a string.
  *
  * @param string $header Type
- * @param integer $n Number
- * @return integer plural match
+ * @param int $n Number
+ * @return int plural match
  */
 	protected function _pluralGuess($header, $n) {
 		if (!is_string($header) || $header === "nplurals=1;plural=0;" || !isset($header[0])) {
