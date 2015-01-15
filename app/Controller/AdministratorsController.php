@@ -5,7 +5,7 @@ class AdministratorsController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('logout', 'add');
-        $this->layout = "default_admin";
+        $this->layout = "bootstrap/default_admin";
     }
 
     public function add() {

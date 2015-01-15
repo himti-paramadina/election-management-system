@@ -4,12 +4,12 @@ class ElectionsController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('display', 'index');
-        $this->layout = "default_admin";
+        $this->layout = "bootstrap/default_admin";
     }
     
     public $name = "Elections";
     
-    public function create() {
+    public function add() {
         /* Need Authentication */
         
         if ($this->request->isPost()) {
@@ -27,7 +27,7 @@ class ElectionsController extends AppController {
     }
     
     public function display($identifier) {
-        $this->layout = "default";
+        $this->layout = "bootstrap/default";
         
         $election = $this->Election->findByidentifier($identifier);
 

@@ -11,7 +11,7 @@ class VotersController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('register');
-        $this->layout = "default_admin";
+        $this->layout = "bootstrap/default_admin";
     }
         
     public $paginate = array(
@@ -106,7 +106,7 @@ class VotersController extends AppController {
         $this->set('title_for_layout', "Registrasi Pemilih " . $election['Election']['name']);
         
         // Set page layout
-        $this->layout = 'default';
+        $this->layout = 'bootstrap/default';
         
         // Bypass value to View
         $this->set('election', $election);

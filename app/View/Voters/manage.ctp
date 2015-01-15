@@ -17,7 +17,7 @@
                 <a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'status', $election['Election']['id'])) ?>" class="btn btn-default"><span class="glyphicon glyphicon-stats"></span> Lihat Status Pemilih</a>
             <?php endif; ?>
         </p>
-        <table class="table table-striped table-hover">
+        <table class="table table-hover">
             <tr>
                 <td width="25%" align="center"><strong>Nama</strong></td>
                 <td width="23%" align="center"><strong>E-mail</strong></td>
@@ -32,15 +32,17 @@
                 <td><?php echo $voter['Voter']['phone_number']; ?></td>
                 <td align="center"><?php echo $voter['Voter']['verified'] ? "<span class='label label-success'>Ya</span>" : "<span class='label label-danger'>Tidak</span>"; ?></td>
                 <td>
-                    <?php if (!$voter['Voter']['verified'] && $number_of_voting_keys == 0): ?>
-                    <a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'verify', $voter['Voter']['id'])); ?>" class="btn btn-default" onclick="return confirm('Anda yakin akan memverifikasi pemilih dengan id <?php echo $voter['Voter']['id'];?> bernama <?php echo $voter['Voter']['name']; ?>?')"><span class='glyphicon glyphicon-ok'></span></a>
-                    <?php elseif (!$voter['Voter']['verified'] && $number_of_voting_keys != 0): ?>
-                    <a href="#" class="btn disabled"><span class='glyphicon glyphicon-ok'></span></a>
-                    <?php else: ?>
-                    <a href="#" class="btn btn-success disabled"><span class='glyphicon glyphicon-ok'></span></a>
-                    <?php endif; ?>
-                    <a href="" class="btn btn-info"><span class='glyphicon glyphicon-envelope'></span></a>
-                    <a href="" class="btn btn-danger" onclick="return confirm('Anda yakin akan menghapus pemilih dengan id <?php echo $voter['Voter']['id'];?> bernama <?php echo $voter['Voter']['name']; ?>?')"><span class='glyphicon glyphicon-trash'></span></a>
+                    <p align="center" style="margin: 0; padding: 0;">
+                        <?php if (!$voter['Voter']['verified'] && $number_of_voting_keys == 0): ?>
+                        <a href="<?php echo Router::url(array('controller' => 'voters', 'action' => 'verify', $voter['Voter']['id'])); ?>" class="btn btn-default" onclick="return confirm('Anda yakin akan memverifikasi pemilih dengan id <?php echo $voter['Voter']['id'];?> bernama <?php echo $voter['Voter']['name']; ?>?')"><span class='glyphicon glyphicon-ok'></span></a>
+                        <?php elseif (!$voter['Voter']['verified'] && $number_of_voting_keys != 0): ?>
+                        <a href="#" class="btn btn-sm btn-warning disabled"><span class='glyphicon glyphicon-ok'></span></a>
+                        <?php else: ?>
+                        <a href="#" class="btn btn-sm btn-success disabled"><span class='glyphicon glyphicon-ok'></span></a>
+                        <?php endif; ?>
+                        <a href="" class="btn btn-sm btn-info"><span class='glyphicon glyphicon-envelope'></span></a>
+                        <a href="" class="btn btn-sm btn-danger" onclick="return confirm('Anda yakin akan menghapus pemilih dengan id <?php echo $voter['Voter']['id'];?> bernama <?php echo $voter['Voter']['name']; ?>?')"><span class='glyphicon glyphicon-trash'></span></a>
+                    </p>
                 </td>
             </tr>
             <?php }?>

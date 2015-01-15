@@ -1,0 +1,24 @@
+{
+  "name": "election",
+  "version": "2.0.0",
+  "homepage": "https://github.com/himti-paramadina/election-management-system",
+  "authors": [
+    "Imam Hidayat <imam.hidayat92@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/webroot/components/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.11.1",
+    "bootstrap": "~3.3.1",
+    "components-font-awesome": "~4.2.0",
+    "tinymce": "~4.1.7",
+    "moment": "~2.8.4"
+  }
+}

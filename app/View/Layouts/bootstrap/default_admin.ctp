@@ -6,7 +6,7 @@
 		<?php echo $title_for_layout; ?> - Sistem Manajemen Pemilu
 	</title>
 	<?php
-		echo $this->Html->css('bootstrap.min');
+		echo $this->Html->css('../components/bootstrap/dist/css/bootstrap.min.css');
         echo $this->Html->css('datepicker');
         echo $this->Html->css('election.style');
 	?>
@@ -28,10 +28,9 @@
         <?php echo $this->Element('footer'); ?>
 	</div>
 	
-	<?php $this->element('sql_dump'); ?>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <?php echo $this->Html->script('bootstrap.min'); ?>
-    <?php echo $this->Html->script('servertime'); ?>
+	<?php echo $this->Html->script('../components/jquery/dist/jquery.min.js'); ?>
+    <?php echo $this->Html->script('../components/bootstrap/dist/js/bootstrap.min.js'); ?>
+    <?php echo $this->Html->script('servertime.js'); ?>
     <?php echo $this->Html->script('bootstrap-datepicker'); ?>
     <script type="text/javascript">
         $(function(){
@@ -43,5 +42,6 @@
            $("#" + action).modal('toggle');
         }
     </script>
+    <?php echo $this->fetch('script_blocks') ?>
 </body>
 </html>

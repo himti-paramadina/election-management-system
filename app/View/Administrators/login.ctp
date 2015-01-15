@@ -6,13 +6,16 @@
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
 <?php if (!AuthComponent::user()) { ?>
-        <h1>Halaman Login Administrator</h1>
+        <div class="page-header">
+            <h1>Halaman Login Administrator</h1>
+        </div>
+
         <form action="<?php echo Router::url(array('controller' => 'administrators', 'action' => 'login')); ?>" method="POST">
             <div class="form-group">
-                <input class="form-control" type="text" name="data[Administrator][email]" placeholder="E-mail untuk Autentikasi"/>
+                <input class="form-control" type="text" name="data[Administrator][email]" placeholder="E-mail"/>
             </div>
             <div class="form-group">
-                <input class="form-control" type="password" name="data[Administrator][password]" placeholder="Password Anda"/>
+                <input class="form-control" type="password" name="data[Administrator][password]" placeholder="Password"/>
             </div>
 
             <input type="submit" class="btn btn-primary"/>

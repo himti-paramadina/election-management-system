@@ -6,6 +6,10 @@
 }
 
 /* Overridden Bootstrap Styles */
+.btn, .form-control, .navbar-default, .navbar-inverse, .panel-group .panel, .panel, .dropdown-menu, .alert, .breadcrumb { 
+    border-radius: 0;
+}
+
 .navbar {
     margin-bottom: 0;
     border-radius: 0;

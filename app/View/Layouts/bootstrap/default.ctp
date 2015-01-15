@@ -6,7 +6,7 @@
         <?php echo $title_for_layout; ?>
     </title>
     <?php
-        echo $this->Html->css('bootstrap.min');
+        echo $this->Html->css('../components/bootstrap/dist/css/bootstrap.min.css');
         echo $this->Html->css('election.style');
     ?>
     

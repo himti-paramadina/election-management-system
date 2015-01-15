@@ -1,6 +1,8 @@
 <div class="row">
-    <div class="page-header">
-        <h1>Portal Pemilihan Umum</h1>
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1>Portal Pemilihan Umum</h1>
+        </div>
     </div>
 </div>
 <div class="row">
