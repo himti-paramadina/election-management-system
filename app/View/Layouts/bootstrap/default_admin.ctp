@@ -5,6 +5,10 @@
 	<title>
 		<?php echo $title_for_layout; ?> - Sistem Manajemen Pemilu
 	</title>
+
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,800' rel='stylesheet' type='text/css'>
+
 	<?php
 		echo $this->Html->css('../components/bootstrap/dist/css/bootstrap.min.css');
         echo $this->Html->css('datepicker');

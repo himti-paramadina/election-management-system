@@ -12,10 +12,10 @@
 <div class="row">
     <div class="col-md-12">
         <div class="page-header">
-            <h1>Kandidat <small><?php echo $election['Election']['name'] ?></small></h1>
+            <h1 style="font-weight: bold;">Kandidat <small><?php echo $election['Election']['name'] ?></small></h1>
         </div>
 
-        <h2 align="center">
+        <h3 align="center" style="margin: 20px 0 30px 0; font-weight: bold;">
             <?php echo $candidate['Candidate']['name']; ?>
             <?php if ($candidate['Candidate']['name2'] != NULL): ?>
                 <?php echo '&amp; ' . $candidate['Candidate']['name2']; ?>
@@ -25,7 +25,7 @@
 </div>
 <div class="row">
     <div class="col-md-5">
-        <?php echo $candidate['Candidate']['img_url'] == NULL ? $this->Html->image('http://placehold.it/400x200', array('class' => 'thumbnail')):$this->Html->image($candidate['Candidate']['img_url'], array('class' => 'thumbnail')); ?>
+        <?php echo $candidate['Candidate']['img_url'] == NULL ? $this->Html->image('http://placehold.it/400x200', array('class' => 'img-responsive thumbnail')):$this->Html->image($candidate['Candidate']['img_url'], array('class' => 'thumbnail img-responsive')); ?>
 
         <?php if (time() > strtotime($election['Election']['start_time']) && time() <= strtotime($election['Election']['end_time'])): ?>
         <a href="<?php echo Router::url(array('controller' => 'candidates', 'action' => 'vote', $candidate['Candidate']['id'])) ?>" class="btn btn-warning btn-block">

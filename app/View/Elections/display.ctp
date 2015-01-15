@@ -25,41 +25,45 @@
 <?php elseif (time() > strtotime($election['Election']['announcement_time'])): ?>
 <?php endif; ?>
 <div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1 style="font-weight: bold;">Kandidat <small><?php echo $election['Election']['name'] ?></small></h1>
+        </div>
+
+        <div class="row">
+        <?php $mod = 0; ?>
+        <?php foreach ($election['Candidate'] as $candidate): $mod++;?>
+            
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p align="center"><?php echo $this->Html->image($candidate['img_url'], array('class' => 'img-responsive thumbnail')) ?></p>
+                        <h2 align="center" style="margin: 0; padding: 0; font-weight: bold;"><?php echo $candidate['name'] ?></h3>
+                        <h2 align="center" style="margin: 0 0 20px 0; padding: 0; font-weight: bold;"><?php echo $candidate['name2'] ?></h3>
+                        <a class="btn btn-lg btn-success btn-block" href="<?php echo Router::url(array('controller' => 'candidates', 'action' => 'detail', $election['Election']['identifier'], $candidate['candidate_unique_identifier'])) ?>"><span class="glyphicon glyphicon-check"></span> Kenali Lebih Dekat</a>
+                    </div>
+                </div>
+            </div>
+            <?php if ($mod % 2 == 0): ?>
+            <p class="separator" style="width: 100%; display: block; clear: both; margin: 0; padding: 0; height: 10px;">&nbsp;</p>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-md-9">
         <div class="page-header">
-            <h1>Informasi Terbaru <small><?php echo $election['Election']['name'] ?></small></h1>
+            <h1 style="font-weight: bold;">Informasi Terbaru <small><?php echo $election['Election']['name'] ?></small></h1>
         </div>
 
         <h1><a href="<?php echo Router::url(array('controller' => 'posts', 'action' => 'view', $election['Election']['identifier'], $election['Post'][0]['post_unique_identifier'])) ?>"><?php echo $election['Post'][0]['title'] ?></a></h1>
         <p><em><?php echo $election['Post'][0]['created'] ?></em></p>
         <?php echo $election['Post'][0]['excerpt'] ?>
 
-        <div class="page-header">
-            <h1>Kandidat <small><?php echo $election['Election']['name'] ?></small></h1>
-        </div>
-
-        <?php foreach ($election['Candidate'] as $candidate): ?>
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <p align="center"><?php echo $this->Html->image($candidate['img_url'], array('class' => 'img-responsive thumbnail')) ?></p>
-                            <h3 align="center" style="margin: 0; padding: 0;"><?php echo $candidate['name'] ?></h3>
-                            <h3 align="center" style="margin: 0 0 10px 0; padding: 0;"><?php echo $candidate['name2'] ?></h3>
-                            <a class="btn btn-warning btn-block" href="<?php echo Router::url(array('controller' => 'candidates', 'action' => 'detail', $election['Election']['identifier'], $candidate['candidate_unique_identifier'])) ?>"><span class="glyphicon glyphicon-check"></span> Kenali Lebih Dekat</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
 
     </div>
     <div class="col-md-3">
-        <h2>Informasi</h2>
-
-        <?php foreach ($election['Post'] as $post): ?>
-            <h4><a href="<?php echo Router::url(array('controller' => 'posts', 'action' => 'view', $election['Election']['identifier'], $post['post_unique_identifier'])) ?>"><?php echo $post['title'] ?></a></h4>
-        <?php endforeach; ?>
 
         <h2>Bersiaplah Untuk Memilih!</h2>
 

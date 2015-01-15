@@ -1,3 +1,7 @@
+body {
+	font-family: 'Open Sans', arial;
+}
+
 .error-message {
     color: red;
     margin-bottom: 20px;
@@ -6,7 +10,7 @@
 }
 
 /* Overridden Bootstrap Styles */
-.btn, .form-control, .navbar-default, .navbar-inverse, .panel-group .panel, .panel, .dropdown-menu, .alert, .breadcrumb { 
+.btn, .form-control, .navbar-default, .navbar-inverse, .panel-group .panel, .panel, .dropdown-menu, .alert, .breadcrumb, .label { 
     border-radius: 0;
 }
 
@@ -21,4 +25,8 @@
 
 .navbar-inverse a.navbar-brand:hover {
     color: yellow;
+}
+
+p, ul li, ol li {
+	line-height: 24px;
 }

@@ -20,12 +20,6 @@
         <?php echo $post['body'] ?>
     </div>
     <div class="col-md-3">
-        <h2>Informasi</h2>
-
-        <?php foreach ($election['Post'] as $post): ?>
-            <h4><a href="<?php echo Router::url(array('controller' => 'posts', 'action' => 'view', $election['Election']['identifier'], $post['post_unique_identifier'])) ?>"><?php echo $post['title'] ?></a></h4>
-        <?php endforeach; ?>
-
         <h2>Bersiaplah Untuk Memilih!</h2>
 
         <div class="panel panel-default">

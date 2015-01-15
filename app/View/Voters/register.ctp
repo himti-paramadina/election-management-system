@@ -11,7 +11,9 @@
 </div>
 <div class="row">
     <div class="col-md-4">
-        <h1>Registrasi Pemilih</h1>
+        <div class="page-header">
+            <h1 style="font-weight: bold;">Registrasi Pemilih</h1>
+        </div>
         <p>Kamu akan mendaftar sebagai pemilih pada <strong><?php echo $election['Election']['name']; ?></strong></p>
         <?php echo $this->Form->create(null, array(
                     'url' => array('controller' => 'voters', 'action' => 'register', $election['Election']['identifier'])
@@ -43,7 +45,7 @@
             )); ?>
             </div>
 
-            <button type="submit" class="btn btn-block btn-primary">Daftar</button>
+            <button type="submit" class="btn btn-lg btn-block btn-success">Daftar</button>
 
         <?php $this->Form->end(); ?>
     </div>

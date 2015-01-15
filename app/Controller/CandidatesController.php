@@ -6,7 +6,7 @@ class CandidatesController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('display', 'detail', 'result', 'vote');
-        $this->layout = "default_admin";
+        $this->layout = "bootstrap/default_admin";
     }
     
     public $name = 'Candidates';
@@ -52,7 +52,7 @@ class CandidatesController extends AppController {
     }
     
     public function display($election_identifier) {
-        $this->layout = "default";
+        $this->layout = "bootstrap/default";
         
         // Load data
         $election = $this->Candidate->Election->findByidentifier($election_identifier);
@@ -71,7 +71,7 @@ class CandidatesController extends AppController {
     }
     
     public function detail($electionId, $candidateUniqueId) {
-        $this->layout = "default";
+        $this->layout = "bootstrap/default";
         $this->set('title_for_layout', 'Detail Data Kandidat');
 
         // Load data
@@ -116,7 +116,7 @@ class CandidatesController extends AppController {
     }
     
     public function result($election_id) {
-        $this->layout = 'default';
+        $this->layout = 'bootstrap/default';
         
         $election = $this->Candidate->Election->findByidentifier($election_id);
         $this->set('title_for_layout', 'Hasil ' . $election['Election']['name']);
@@ -155,7 +155,7 @@ class CandidatesController extends AppController {
     }
     
     public function vote($candidate_id) {
-        $this->layout = 'default';
+        $this->layout = 'bootstrap/default';
         $this->set('title_for_layout', 'Vote!');
         
         $this->loadModel('Election');

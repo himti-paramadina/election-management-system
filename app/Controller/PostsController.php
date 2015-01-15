@@ -3,6 +3,9 @@
 class PostsController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
+
+        $this->layout = "bootstrap/default_admin";
+
         $this->Auth->allow('view');
     }
 

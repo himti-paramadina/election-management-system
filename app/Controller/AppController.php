@@ -89,14 +89,20 @@ class AppController extends Controller {
         
         $voter = $this->Voter->findByid($voter_id);
         
+        $election = $this->Election->findByid($voter['Voter']['election_id']);
+
         $body = str_replace(
                 array(
                     '<<name>>',
-                    '<<recipient>>'
+                    '<<recipient>>',
+                    '<<organization_name>>',
+                    '<<election_name>>'
                 ),
                 array(
                     $voter['Voter']['name'],
-                    $voter['Voter']['email']
+                    $voter['Voter']['email'],
+                    $election['Election']['organization'],
+                    $election['Election']['name']
                 ),
                 $email['EmailTemplate']['body']
         );
@@ -144,7 +150,9 @@ class AppController extends Controller {
                 array(
                     '<<name>>',
                     '<<voting-key>>',
-                    '<<vote-url>>'
+                    '<<vote-url>>',
+                    '<<organization_name>>',
+                    '<<election_name>>'
                 ),
                 array(
                     $voter['Voter']['name'],
@@ -153,7 +161,9 @@ class AppController extends Controller {
                         'controller' => 'candidates', 
                         'action' => 'display', 
                         $election['Election']['identifier']
-                    ), true)
+                    ), true),
+                    $election['Election']['organization'],
+                    $election['Election']['name']
                 ),
                 $email['EmailTemplate']['body']
         );

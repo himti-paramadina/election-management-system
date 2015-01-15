@@ -15,7 +15,7 @@
 
     <div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#" style="color: white;"><span class="glyphicon glyphicon-time"></span> <span id="servertime"></span></a></li>
+            <li><a href="#" style="color: white; margin-right: 20px;"><span class="glyphicon glyphicon-time"></span> <span id="servertime"></span></a></li>
         </ul>
     </div>
 </nav>
